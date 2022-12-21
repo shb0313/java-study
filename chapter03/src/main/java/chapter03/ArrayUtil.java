@@ -12,11 +12,21 @@ public class ArrayUtil {
 	}
 
 	public static int[] doubleToInt(double[] ds) {
-		return null;
+		int[] result = new int[ds.length];
+		
+		for(int i = 0; i<ds.length; i++) {
+			result[i] += ds[i]; 
+		}
+		return result;
 	}
 
 	public static int[] concat(int[] is) {
-		return null;
+		int[] result = new int[is.length];
+		
+		for(int i = 0; i<is.length; i++) {
+			result[i] += is[i]; 
+		}
+		return result;
 	}
 	
 }
