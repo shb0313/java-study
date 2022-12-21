@@ -12,12 +12,10 @@ public class ArrayUtil {
 	}
 
 	public static int[] doubleToInt(double[] ds) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public static int[] concat(int[] is) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
