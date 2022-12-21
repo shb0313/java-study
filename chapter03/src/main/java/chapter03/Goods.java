@@ -1,10 +1,22 @@
 package chapter03;
 
 public class Goods {
+	public static int countOfGoods = 0;
+	
 	private String name;
 	private int price;
 	private int countStock;
 	private int countSold;
+	
+	public Goods() {
+		countOfGoods = countOfGoods + 1;
+	}
+	
+	public int calcDiscountPrice(float discountRate) {
+		int i = (int)4.5;
+		return (int)(price*discountRate);
+	}
+	
 	
 	public void printInfo() {
 		System.out.println(name + ":" + price + ":" + countStock + ":" + countSold);
@@ -20,6 +32,9 @@ public class Goods {
 		return price;
 	}
 	public void setPrice(int price) {
+		if(price<0) {
+			price = 0;
+		}
 		this.price = price;
 	}
 	public int getCountStock() {
