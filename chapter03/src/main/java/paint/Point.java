@@ -18,7 +18,7 @@ public class Point {
 	}
 	
 	public void show() {
-		System.out.println("점(x=" + 10 + ", y=" + y + ")를 그렸습니다.");
+		System.out.println("점(x=" + x + ", y=" + y + ")를 그렸습니다.");
 	}
 	
 }
