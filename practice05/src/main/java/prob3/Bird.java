@@ -10,7 +10,7 @@ public abstract class Bird {
 	public void sing() {
 		
 	}
-
+	
 	public String getName() {
 		return name;
 	}
