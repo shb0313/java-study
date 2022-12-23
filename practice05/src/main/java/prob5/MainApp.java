@@ -24,9 +24,9 @@ public class MainApp {
 			System.out.println(stack.pop());
 			System.out.println(stack.pop());
 			
-		} catch ( MyStackException ex) {
-			System.out.println( ex );
-		}
+		} //catch ( MyStackException ex) {
+//			System.out.println( ex );
+//		}
 
 	}
 
