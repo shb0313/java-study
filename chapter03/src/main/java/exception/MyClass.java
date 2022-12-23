@@ -5,7 +5,7 @@ import java.io.IOException;
 public class MyClass {
 	
 	
-	public void danger() throws IOException {
+	public void danger() throws IOException, MyException {
 		System.out.println("Some code1...");
 		System.out.println("Some code2...");
 		
