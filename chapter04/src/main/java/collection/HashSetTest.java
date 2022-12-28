@@ -24,9 +24,6 @@ public class HashSetTest {
 		//순회1
 		for(String str : s) {
 			System.out.println(str);
-		}
-		
-		
+		}	
 	}
-
 }

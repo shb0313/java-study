@@ -1,14 +1,12 @@
 package com.douzone.paint.collection.test;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.douzone.paint.collection.MyStack;
 import com.douzone.paint.point.Point;
 import com.douzone.paint.shape.Rect;
 import com.douzone.paint.shape.Shape;
+import com.douzone.paint.i.Drawable;
 
 public class GenericTest {
 
@@ -85,8 +83,4 @@ public class GenericTest {
 		}
 		
 	}
-	
-	
-	
-	
 }
