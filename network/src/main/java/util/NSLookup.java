@@ -8,11 +8,10 @@ public class NSLookup {
 
 	public static void main(String[] args) {
 
+		Scanner sc = new Scanner(System.in);
 		try {
-
 			while (true) {
 				System.out.print(">");
-				Scanner sc = new Scanner(System.in);
 				String domainName = sc.nextLine();
 
 				InetAddress[] inetAddresses = InetAddress.getAllByName(domainName);
@@ -24,10 +23,11 @@ public class NSLookup {
 				if (domainName == "exit") {
 					break;
 				}
-
 			}
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
+		} finally {
+			sc.close();			
 		}
 
 	}
