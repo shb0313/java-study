@@ -17,7 +17,7 @@ public class TCPClient {
 			socket = new Socket();
 
 			// 2. 서버연결
-			socket.connect(new InetSocketAddress("SERVER_IP", SERVER_PORT));
+			socket.connect(new InetSocketAddress(SERVER_IP, SERVER_PORT));
 			
 			// 3. IO Stream 반아오기
 			InputStream is = socket.getInputStream();
