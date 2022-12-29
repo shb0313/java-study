@@ -12,22 +12,22 @@ import java.net.SocketException;
 
 public class EchoServer {
 	public static final int PORT = 8000;
-
+	
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;
 		
 		try {
 			serverSocket = new ServerSocket();
-			
-			serverSocket.bind(new InetSocketAddress("0.0.0.0", 8000));
+
+			serverSocket.bind(new InetSocketAddress("0.0.0.0", 8000), 10);
 			log("starts...[port:" + PORT + "]");
+			
 			Socket socket = serverSocket.accept();
 
-			InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
+			InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress)socket.getRemoteSocketAddress();
 			String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
 			int remotePort = inetRemoteSocketAddress.getPort();
 			log("connected by client[" + remoteHostAddress + ":" + remotePort + "]");
-			
 			
 			try {
 				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
@@ -38,38 +38,39 @@ public class EchoServer {
 					if(data == null) {
 						log("closed by client");
 						break;
-					}	
+					}
+					
 					log("received:" + data);
 					pw.println(data);
-				}		
+				}
 			} catch(SocketException ex) {
-				System.out.println("[server] suddenly closed by server");
+				System.out.println("[server] suddenly closed by client");
 			} catch(IOException ex) {
 				log("error:" + ex);
-			}finally {
+			} finally {
 				try {
 					if(socket != null && !socket.isClosed()) {
-						socket.close();						
+						socket.close();
 					}
 				} catch(IOException ex) {
 					ex.printStackTrace();
 				}
 			}
-						
 		} catch (IOException e) {
-			log("error" + e);
+			log("error:" + e);
 		} finally {
 			try {
-				if(serverSocket != null && serverSocket.isClosed()) {
-					serverSocket.close();					
+				if(serverSocket != null && !serverSocket.isClosed()) {
+					serverSocket.close();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
-			} 
+			}
 		}
 	}
 	
 	private static void log(String message) {
-		System.out.println("[EchoServer]" + message);
+		System.out.println("[EchoServer] " + message);
 	}
+
 }
