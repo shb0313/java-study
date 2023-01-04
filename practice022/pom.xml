@@ -5,7 +5,7 @@
     <artifactId>java-study</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>practice02</artifactId>
+  <artifactId>practice022</artifactId>
   <build>
 	  <finalName>practice022</finalName>
   </build>
