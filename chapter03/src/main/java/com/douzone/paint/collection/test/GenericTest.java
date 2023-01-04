@@ -71,7 +71,7 @@ public class GenericTest {
 	 * @param <Drawable>
 	 */
 	
-	public static <Drawable> void drawShapeLayer(
+	public static void drawShapeLayer(
 			List<?extends Shape> in,           /* Producer, Lower Bounded */
 			MyStack<? super Drawable> out /* Consumer, Upper Bounded */) {   
 		//잘못된 사용
