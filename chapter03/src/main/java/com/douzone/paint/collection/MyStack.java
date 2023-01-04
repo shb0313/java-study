@@ -4,7 +4,7 @@ public class MyStack<T> {
 	private T[] buffer;
 	private int top;
 	
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	public MyStack(int i) {
 		buffer = (T[])new Object[i];
 		top = -1;
@@ -33,7 +33,7 @@ public class MyStack<T> {
 		return top == -1;
 	}
 
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	public void resize() {
 		T[] temp = (T[])new Object[buffer.length * 2];
 		for (int i = 0; i <= top; i++) {
