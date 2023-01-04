@@ -10,8 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
-import chat.ChatServer;
+import chatprac.ChatServer;
 
 public class ChatServerThread extends Thread {
 	private String nickName;
