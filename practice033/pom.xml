@@ -7,6 +7,6 @@
   </parent>
   <artifactId>practice03</artifactId>
   <build>
-	  <finalName>practice03</finalName>
+	  <finalName>practice033</finalName>
   </build>
 </project>
