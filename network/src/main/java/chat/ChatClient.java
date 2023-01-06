@@ -1,13 +1,12 @@
-package chatprac;
+package chat;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Scanner;
 
 public class ChatClient {
@@ -16,7 +15,6 @@ public class ChatClient {
 	public static void main(String[] args) {
 		Socket socket = null;
 		Scanner scanner = null;
-		BufferedReader bufferedReader;
 		PrintWriter printWriter;
 
 		try {
@@ -31,14 +29,13 @@ public class ChatClient {
 			log("connected");
 
 			// 4. reader/writer 생성
-			bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 			printWriter = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
 
 			// 5. join 프로토콜
 			System.out.print("닉네임>>");
 			String nickName = scanner.nextLine();
 			printWriter.println("join:" + nickName);
-			printWriter.flush();
+			//printWriter.flush();
 
 			// 6. ChatClientThread 시작
 			new ChatClientThread(socket).start();
@@ -48,12 +45,13 @@ public class ChatClient {
 				System.out.print(">>");
 				String input = scanner.nextLine();
 
-				if ("quit".equals(input) == true) {
+				if ("quit".equals(input)) {
 					// 8. quit 프로토콜 처리
+					printWriter.println(input);				
 					break;
 				} else {
 					// 9. 메시지 처리
-					System.out.println(nickName + ":" + input);
+					printWriter.println("message:" + base64Encoding(input));
 				}
 			}
 		} catch (IOException e) {
@@ -73,8 +71,12 @@ public class ChatClient {
 		}
 	}
 
-	private static void log(String message) {
+	public static void log(String message) {
 		System.out.println("Client : " + message);
 	}
 
+	public static String base64Encoding(String message) {
+		String encodedString = Base64.getEncoder().encodeToString(message.getBytes(StandardCharsets.UTF_8));
+		return encodedString;
+	}
 }

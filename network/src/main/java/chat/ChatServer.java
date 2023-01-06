@@ -1,4 +1,4 @@
-package chatprac;
+package chat;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -22,7 +22,6 @@ public class ChatServer {
 			serverSocket = new ServerSocket();
 
 			// 2. 바인딩
-			//String hostAddress = InetAddress.getLocalHost().getHostAddress();
 			serverSocket.bind(new InetSocketAddress("0.0.0.0", PORT));
 			log("연결 기다림" + ":" + PORT);
 
@@ -35,12 +34,7 @@ public class ChatServer {
 			log("error:" + e);
 		} finally {
 			try {
-				if (socket != null && !socket.isClosed()) {
-					socket.close();
-
-				}
 				if (serverSocket != null && !serverSocket.isClosed()) {
-
 					serverSocket.close();
 				}
 			} catch (IOException e) {

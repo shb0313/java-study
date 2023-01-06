@@ -13,16 +13,31 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class ChatWindow {
-
 	private Frame frame;
 	private Panel pannel;
 	private Button buttonSend;
 	private TextField textField;
 	private TextArea textArea;
+	private String name;
 
-	public ChatWindow(String name) {
+	BufferedReader bufferedReader = null;
+	PrintWriter printWriter = null;
+	Socket socket;
+
+	public ChatWindow(String name, Socket socket) {
+		this.name = name;
+		this.socket = socket;
+
 		frame = new Frame(name);
 		pannel = new Panel();
 		buttonSend = new Button("Send");
@@ -85,20 +100,34 @@ public class ChatWindow {
 		});
 		frame.setVisible(true);
 		frame.pack();
-		
+
 		// IOStream 받아오기
-		
-		
-		//ChatClientThread 생성 & 실행
-		
-		
+		try {
+			bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+			printWriter = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8),
+					true);
+
+			// ChatClientThread 생성 & 실행
+			new ChatClientThread(socket).start();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void finish() {
 		// quit pritocol 구현
+		printWriter.println("quit");
 
 		// clean-up
-
+		try {
+			if (socket != null && !socket.isClosed()) {
+				socket.close();
+			}
+		} catch (IOException e) {
+			System.out.println("error:" + e);
+		}
+		
 		// exit java(Application)
 		System.exit(0);
 
@@ -110,9 +139,9 @@ public class ChatWindow {
 
 		textField.setText("");
 		textField.requestFocus();
-		
+
 		// ChatClientThread에서 서버로부터 받은 메시지가 있다 치고~
-		updateTextArea("마이콜 : " + message);
+		printWriter.println("message:" + base64Encoding(message));
 	}
 
 	private void updateTextArea(String message) {
@@ -121,14 +150,35 @@ public class ChatWindow {
 	}
 
 	private class ChatClientThread extends Thread {
-		@Override
-		public void run() {
-			// String message = br.readLine();
-			//
-			//
-			updateTextArea("안녕");
+		private Socket socket;
+
+		public ChatClientThread(Socket socket) {
+			this.socket = socket;
 		}
 
+		@Override
+		public void run() {
+			try {
+				bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+				
+				while (true) {
+					String message = bufferedReader.readLine();
+
+					if (message == null) {
+						System.out.println("error");
+						break;
+					}
+					System.out.println("message" + base64Encoding(message));
+					updateTextArea(message);
+				}
+			} catch (IOException e) {
+				System.out.println("채팅종료");
+			} 
+		}
 	}
 
+	public static String base64Encoding(String message) {
+		String encodedString = Base64.getEncoder().encodeToString(message.getBytes(StandardCharsets.UTF_8));
+		return encodedString;
+	}
 }
